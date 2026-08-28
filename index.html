@@ -5,74 +5,495 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111">
 <title>POINT STOCK</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f5f7;color:#111}
-header{background:#111;color:#fff;padding:22px 18px 18px;position:sticky;top:0;z-index:2}
-.logo{font-size:24px;font-weight:800;letter-spacing:1.5px}.sub{opacity:.65;font-size:12px;margin-top:3px}
-main{max-width:700px;margin:auto;padding:16px}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 1px 4px #0000000d}
-.stat b{display:block;font-size:20px;margin-top:5px}.label{font-size:11px;color:#777}
-.search{margin:14px 0;position:sticky;top:78px;z-index:1}.search input{width:100%;padding:15px 16px;border:1px solid #ddd;border-radius:13px;font-size:16px;background:#fff}
-button{border:0;border-radius:12px;padding:13px 16px;font-weight:700;font-size:15px;cursor:pointer}.primary{background:#111;color:#fff;width:100%;margin-bottom:14px}
-.product{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:9px}.info{min-width:0}.name{font-weight:700}.meta{font-size:13px;color:#777;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.qty{font-weight:800;white-space:nowrap}.actions{display:flex;gap:6px;margin-top:8px}.actions button{padding:8px 12px;background:#eee}
-.form{display:none;background:#fff;padding:16px;border-radius:14px;margin-bottom:14px}.form input,.form textarea{width:100%;padding:12px;margin:5px 0 9px;border:1px solid #ddd;border-radius:10px;font-size:15px}.form textarea{min-height:70px;resize:vertical}
-.empty{text-align:center;color:#777;padding:35px 10px}.money{font-size:13px;color:#555;margin-top:5px}
-@media(max-width:420px){.stats{gap:6px}.card{padding:11px}.stat b{font-size:17px}}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ background:#f5f5f7;
+ color:#111
+}
+header{
+ background:#111;
+ color:#fff;
+ padding:22px 18px 18px;
+ position:sticky;
+ top:0;
+ z-index:2
+}
+.logo{
+ font-size:24px;
+ font-weight:800;
+ letter-spacing:1.5px
+}
+.sub{
+ opacity:.65;
+ font-size:12px;
+ margin-top:3px
+}
+main{
+ max-width:700px;
+ margin:auto;
+ padding:16px
+}
+.stats{
+ display:grid;
+ grid-template-columns:1fr 1fr 1fr;
+ gap:8px
+}
+.card{
+ background:#fff;
+ border-radius:14px;
+ padding:14px;
+ box-shadow:0 1px 4px #0000000d
+}
+.stat b{
+ display:block;
+ font-size:20px;
+ margin-top:5px
+}
+.label{
+ font-size:11px;
+ color:#777
+}
+.search{
+ margin:14px 0;
+ position:sticky;
+ top:78px;
+ z-index:1
+}
+.search input{
+ width:100%;
+ padding:15px 16px;
+ border:1px solid #ddd;
+ border-radius:13px;
+ font-size:16px;
+ background:#fff
+}
+button{
+ border:0;
+ border-radius:12px;
+ padding:13px 16px;
+ font-weight:700;
+ font-size:15px;
+ cursor:pointer
+}
+.primary{
+ background:#111;
+ color:#fff;
+ width:100%;
+ margin-bottom:14px
+}
+.form{
+ display:none;
+ background:#fff;
+ padding:16px;
+ border-radius:14px;
+ margin-bottom:14px
+}
+.form input,.form textarea{
+ width:100%;
+ padding:12px;
+ margin:5px 0 9px;
+ border:1px solid #ddd;
+ border-radius:10px;
+ font-size:15px
+}
+.form textarea{
+ min-height:70px;
+ resize:vertical
+}
+.product{
+ margin-bottom:10px
+}
+.product-top{
+ display:flex;
+ justify-content:space-between;
+ gap:12px;
+ align-items:flex-start
+}
+.info{
+ min-width:0
+}
+.name{
+ font-weight:700;
+ font-size:18px
+}
+.meta{
+ font-size:13px;
+ color:#777;
+ margin-top:3px
+}
+.money{
+ font-size:13px;
+ color:#555;
+ margin-top:6px
+}
+.qty{
+ font-weight:800;
+ white-space:nowrap
+}
+.actions{
+ display:flex;
+ gap:6px;
+ margin-top:10px;
+ flex-wrap:wrap
+}
+.actions button{
+ padding:8px 12px;
+ background:#eee
+}
+.actions .edit{
+ background:#ddd
+}
+.actions .delete{
+ background:#ffe5e5;
+ color:#b00000
+}
+.empty{
+ text-align:center;
+ color:#777;
+ padding:35px 10px
+}
+@media(max-width:420px){
+ .stats{gap:6px}
+ .card{padding:11px}
+ .stat b{font-size:17px}
+}
 </style>
 </head>
+
 <body>
-<header><div class="logo">POINT STOCK</div><div class="sub">Stok Yönetimi</div></header>
+
+<header>
+ <div class="logo">POINT STOCK</div>
+ <div class="sub">Stok Yönetimi</div>
+</header>
+
 <main>
+
 <div class="stats">
-<div class="card stat"><div class="label">ÜRÜN</div><b id="products">0</b></div>
-<div class="card stat"><div class="label">ADET</div><b id="units">0</b></div>
-<div class="card stat"><div class="label">MALİYET</div><b id="cost">₺0</b></div>
+ <div class="card stat">
+  <div class="label">ÜRÜN</div>
+  <b id="products">0</b>
+ </div>
+
+ <div class="card stat">
+  <div class="label">ADET</div>
+  <b id="units">0</b>
+ </div>
+
+ <div class="card stat">
+  <div class="label">MALİYET</div>
+  <b id="cost">₺0</b>
+ </div>
 </div>
-<div class="search"><input id="search" placeholder="Ürün, marka veya model ara..."></div>
-<button class="primary" onclick="toggleForm()">＋ Ürün Ekle</button>
+
+<div class="search">
+ <input id="search" placeholder="Ürün, marka veya model ara...">
+</div>
+
+<button class="primary" onclick="openForm()">＋ Ürün Ekle</button>
+
 <div class="form" id="form">
-<input id="name" placeholder="Ürün adı *">
-<input id="brand" placeholder="Marka">
-<input id="model" placeholder="Model">
-<input id="qty" type="number" min="0" placeholder="Adet *">
-<input id="buy" type="number" min="0" step="0.01" placeholder="Alış fiyatı">
-<input id="sell" type="number" min="0" step="0.01" placeholder="Satış fiyatı">
-<textarea id="note" placeholder="Açıklama"></textarea>
-<button class="primary" onclick="addProduct()">Kaydet</button>
+
+ <input id="name" placeholder="Ürün adı *">
+ <input id="brand" placeholder="Marka">
+ <input id="model" placeholder="Model">
+ <input id="qty" type="number" min="0" placeholder="Adet *">
+ <input id="buy" type="number" min="0" step="0.01" placeholder="Alış fiyatı">
+ <input id="sell" type="number" min="0" step="0.01" placeholder="Satış fiyatı">
+ <textarea id="note" placeholder="Açıklama"></textarea>
+
+ <button class="primary" id="saveButton" onclick="saveProduct()">Kaydet</button>
+
+ <button
+  type="button"
+  onclick="closeForm()"
+  style="width:100%;background:#eee;margin-top:-5px">
+  Vazgeç
+ </button>
+
 </div>
+
 <div id="list"></div>
+
 </main>
+
 <script>
+
 let items=JSON.parse(localStorage.getItem("pointStock")||"[]");
+
+let editingId=null;
+
 const $=id=>document.getElementById(id);
-const money=n=>new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY",maximumFractionDigits:2}).format(n||0);
-function save(){localStorage.setItem("pointStock",JSON.stringify(items));render()}
-function toggleForm(){let f=$("form");f.style.display=f.style.display==="block"?"none":"block"}
-function addProduct(){
- let name=$("name").value.trim(); if(!name){alert("Ürün adı gerekli.");return}
- let item={id:Date.now(),name,brand:$("brand").value.trim(),model:$("model").value.trim(),
- qty:Number($("qty").value)||0,buy:Number($("buy").value)||0,sell:Number($("sell").value)||0,note:$("note").value.trim(),created:Date.now()};
- items.unshift(item); ["name","brand","model","qty","buy","sell","note"].forEach(x=>$(x).value=""); $("form").style.display="none"; save()
+
+const money=n=>
+ new Intl.NumberFormat("tr-TR",{
+  style:"currency",
+  currency:"TRY",
+  maximumFractionDigits:2
+ }).format(n||0);
+
+
+function save(){
+ localStorage.setItem("pointStock",JSON.stringify(items));
+ render();
 }
-function change(id,delta){let x=items.find(i=>i.id===id); if(x){x.qty=Math.max(0,x.qty+delta);save()}}
+
+
+function openForm(){
+ editingId=null;
+
+ $("name").value="";
+ $("brand").value="";
+ $("model").value="";
+ $("qty").value="";
+ $("buy").value="";
+ $("sell").value="";
+ $("note").value="";
+
+ $("saveButton").textContent="Kaydet";
+ $("form").style.display="block";
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+}
+
+
+function closeForm(){
+ editingId=null;
+ $("form").style.display="none";
+}
+
+
+function editProduct(id){
+
+ let item=items.find(i=>i.id===id);
+
+ if(!item)return;
+
+ editingId=id;
+
+ $("name").value=item.name||"";
+ $("brand").value=item.brand||"";
+ $("model").value=item.model||"";
+ $("qty").value=item.qty||0;
+ $("buy").value=item.buy||0;
+ $("sell").value=item.sell||0;
+ $("note").value=item.note||"";
+
+ $("saveButton").textContent="Değişiklikleri Kaydet";
+ $("form").style.display="block";
+
+ window.scrollTo({
+  top:0,
+  behavior:"smooth"
+ });
+}
+
+
+function saveProduct(){
+
+ let name=$("name").value.trim();
+
+ if(!name){
+  alert("Ürün adı gerekli.");
+  return;
+ }
+
+ let data={
+  name:name,
+  brand:$("brand").value.trim(),
+  model:$("model").value.trim(),
+  qty:Number($("qty").value)||0,
+  buy:Number($("buy").value)||0,
+  sell:Number($("sell").value)||0,
+  note:$("note").value.trim()
+ };
+
+
+ if(editingId){
+
+  let item=items.find(i=>i.id===editingId);
+
+  if(item){
+   Object.assign(item,data);
+  }
+
+ }else{
+
+  items.unshift({
+   id:Date.now(),
+   ...data,
+   created:Date.now()
+  });
+
+ }
+
+
+ closeForm();
+ save();
+}
+
+
+function deleteProduct(id){
+
+ let item=items.find(i=>i.id===id);
+
+ if(!item)return;
+
+ let cevap=confirm(
+  '"' + item.name + '" ürününü silmek istediğine emin misin?'
+ );
+
+ if(!cevap)return;
+
+ items=items.filter(i=>i.id!==id);
+
+ save();
+}
+
+
+function change(id,delta){
+
+ let item=items.find(i=>i.id===id);
+
+ if(item){
+
+  item.qty=Math.max(0,item.qty+delta);
+
+  save();
+ }
+}
+
+
 function render(){
+
  let q=$("search").value.toLowerCase().trim();
- let filtered=items.filter(i=>[i.name,i.brand,i.model,i.note].join(" ").toLowerCase().includes(q));
+
+ let filtered=items.filter(i=>
+  [i.name,i.brand,i.model,i.note]
+  .join(" ")
+  .toLowerCase()
+  .includes(q)
+ );
+
  $("products").textContent=items.length;
- $("units").textContent=items.reduce((s,i)=>s+i.qty,0);
- $("cost").textContent=money(items.reduce((s,i)=>s+i.qty*i.buy,0));
- $("list").innerHTML=filtered.length?filtered.map(i=>`
+
+ $("units").textContent=
+  items.reduce((sum,i)=>sum+i.qty,0);
+
+ $("cost").textContent=
+  money(items.reduce((sum,i)=>sum+i.qty*i.buy,0));
+
+
+ $("list").innerHTML=filtered.length
+
+ ?filtered.map(i=>`
+
  <div class="card product">
-  <div class="info"><div class="name">${esc(i.name)}</div>
-  <div class="meta">${esc([i.brand,i.model].filter(Boolean).join(" · ")||"Marka/model belirtilmedi")}</div>
-  <div class="money">Alış: ${money(i.buy)} · Satış: ${money(i.sell)}</div>
-  <div class="actions"><button onclick="change(${i.id},-1)">− 1</button><button onclick="change(${i.id},1)">＋ 1</button></div></div>
-  <div class="qty">${i.qty} adet</div>
- </div>`).join(""):'<div class="empty">Henüz ürün yok.<br>İlk ürününü ekle.</div>'
+
+  <div class="product-top">
+
+   <div class="info">
+
+    <div class="name">
+     ${esc(i.name)}
+    </div>
+
+    <div class="meta">
+     ${esc(
+      [i.brand,i.model]
+      .filter(Boolean)
+      .join(" · ")
+      ||
+      "Marka/model belirtilmedi"
+     )}
+    </div>
+
+    <div class="money">
+     Alış: ${money(i.buy)}
+     ·
+     Satış: ${money(i.sell)}
+    </div>
+
+    ${
+     i.note
+     ?
+     `<div class="meta">${esc(i.note)}</div>`
+     :
+     ""
+    }
+
+    <div class="actions">
+
+     <button onclick="change(${i.id},-1)">
+      − 1
+     </button>
+
+     <button onclick="change(${i.id},1)">
+      ＋ 1
+     </button>
+
+     <button
+      class="edit"
+      onclick="editProduct(${i.id})">
+      ✏️ Düzenle
+     </button>
+
+     <button
+      class="delete"
+      onclick="deleteProduct(${i.id})">
+      🗑️ Sil
+     </button>
+
+    </div>
+
+   </div>
+
+   <div class="qty">
+    ${i.qty} adet
+   </div>
+
+  </div>
+
+ </div>
+
+ `).join("")
+
+ :
+
+ `<div class="empty">
+  Henüz ürün yok.<br>
+  İlk ürününü ekle.
+ </div>`;
 }
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
-$("search").addEventListener("input",render); render();
+
+
+function esc(s){
+
+ return String(s).replace(
+  /[&<>"']/g,
+  m=>({
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+  }[m])
+ );
+}
+
+
+$("search").addEventListener("input",render);
+
+render();
+
 </script>
+
 </body>
 </html>
